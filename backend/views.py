@@ -111,7 +111,7 @@ class TransactionListView(generic.ListView):
     template_name = 'backend/transaction/list.html'
 
     def get_queryset(self):
-        return Transaction.objects.order_by('-date', '-pk')
+        return Transaction.objects.order_by('-pk', '-date')
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
