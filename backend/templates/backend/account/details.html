@@ -1,7 +1,5 @@
 {% extends 'backend/base.html' %}
-
 {% load crispy_forms_tags %}
-
 {% load humanize %}
 
 {% block content %}
@@ -9,17 +7,16 @@
     <div class="card">
         <div class="card-body">
             <div >
-                <div class="float-left card-title"><h3> {{ account.name }}</h3></div>
-                <a href="{% url 'backend:account-delete' pk=account.pk %}" class="btn btn-danger btn-sm float-right ml-1">Delete</a>
-                <a href="{% url 'backend:account-update' pk=account.pk %}" class="btn btn-primary btn-sm float-right">Edit</a>
+                <div class="card-title"><h3> {{ account.name }}</h3></div>
+            </div>
+            <hr/>
+            <div class="text-muted">
+                <span>Name: {{ account.name }}</span><br/>
+                <span>Transactions: {{ account.transactions.count }}</span><br/>
             </div>
             <br/>
-            <br/>            
-            <br/>
-            <div class="em-text">
-                <span><strong>Name: {{ account.name }}</strong></span><br/>
-                <span><strong>Transactions: </strong>{{ account.transactions.count }}</span><br/>
-            </div>
+            <a href="{% url 'backend:account-update' pk=account.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'backend:account-delete' pk=account.pk %}" class="btn btn-danger ">Delete</a>
         </div>        
     </div>
 </div>
