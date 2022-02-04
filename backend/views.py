@@ -110,6 +110,9 @@ class TransactionListView(generic.ListView):
     context_object_name = "transactions"
     template_name = 'backend/transaction/list.html'
 
+    def get_queryset(self):
+        return Transaction.objects.order_by('-date', '-pk')
+
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class TransactionDeleteView(edit.DeleteView):
