@@ -1,0 +1,25 @@
+{% extends 'backend/base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="card mt-2">
+        <div class="card-body">
+            <div class="card-title"><h3>Accounts</h3></div>
+            {% for account in accounts %}
+            <div class="card mt-1">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-5 col-md-6">
+                        <a href="{% url 'backend:account-details' pk=account.pk %}" class="em-text">
+                            #{{ account.pk }} - {{ account.name }}
+                        </a>                        
+                        <br/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}             
+        </div>        
+    </div>
+{% endblock %}

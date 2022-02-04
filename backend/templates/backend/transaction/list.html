@@ -1,0 +1,25 @@
+{% extends 'backend/base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="card mt-2">
+        <div class="card-body">
+            <div class="card-title"><h3>Transactions</h3></div>
+            {% for transaction in transactions %}
+            <div class="card mt-1">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-5 col-md-6">
+                        <a href="{% url 'backend:transaction-details' pk=transaction.pk %}" class="em-text">
+                            #{{ transaction.pk }} - {{ transaction.name }}
+                        </a>                        
+                        <br/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}             
+        </div>        
+    </div>
+{% endblock %}

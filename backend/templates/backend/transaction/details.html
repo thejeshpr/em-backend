@@ -1,0 +1,25 @@
+{% extends 'backend/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% load humanize %}
+
+{% block content %}
+<div>
+    <div class="card">
+        <div class="card-body">
+            <div >
+                <div class="float-left card-title"><h3> {{ transaction.name }}</h3></div>
+                <a href="{% url 'backend:transaction-delete' pk=transaction.pk %}" class="btn btn-danger btn-sm float-right ml-1">Delete</a>
+                <a href="{% url 'backend:transaction-update' pk=transaction.pk %}" class="btn btn-primary btn-sm float-right">Edit</a>
+            </div>
+            <br/>
+            <br/>            
+            <br/>
+            <div class="em-text">
+                <span><strong>Name: {{ transaction.name }}</strong></span><br/>
+            </div>
+        </div>        
+    </div>
+</div>
+{% endblock %}
