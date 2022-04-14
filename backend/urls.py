@@ -38,6 +38,7 @@ urlpatterns = [
     #
     # path('test', views.test, name='test'),
     # path('test-download', views_account.file_download, name="test-download"),
-    # path('json/<str:entity>', views_account.json_download, name="json-download"),
+    path('json/<str:entity>', views.json_download, name="json-download"),
+    path('json-dump', views.json_dump, name="json-dump"),
 
 ]
