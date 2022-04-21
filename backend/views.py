@@ -123,6 +123,20 @@ class TransactionDeleteView(edit.DeleteView):
     success_url ="/"
 
 
+# # @login_required(login_url='/login/')
+# def json_download(request, entity):
+#     valid_entities = {
+#             'transaction': Transaction,
+#             'category': Category,
+#             'account': Account
+#         }
+#     if entity in valid_entities.keys():
+#         objects = valid_entities[entity].objects.all().order_by('-pk')
+#         objects = serializers.serialize('json', objects)        
+#         return HttpResponse(objects, content_type="text/json")
+#     else:
+#         return HttpResponseBadRequest()
+
 # @login_required(login_url='/login/')
 def json_download(request, entity):
     valid_entities = {
@@ -131,38 +145,40 @@ def json_download(request, entity):
             'account': Account
         }
     if entity in valid_entities.keys():
-        objects = valid_entities[entity].objects.all().order_by('-pk')
-        objects = serializers.serialize('json', objects)        
-        return HttpResponse(objects, content_type="text/json")
+        objects = valid_entities[entity].objects.values().order_by('-date', '-pk')
+        data = list(objects)
+        # objects = serializers.serialize('json', objects)        
+        # return HttpResponse(objects, content_type="text/json")
+        return JsonResponse(data, safe = False)
     else:
         return HttpResponseBadRequest()
 
 
-def json_dump(request):
-    transactions = []
-    categories = {}
-    accounts = {}
+# def json_dump(request):
+#     transactions = []
+#     categories = {}
+#     accounts = {}
 
-    objects = Transaction.objects.all().order_by('-date', '-pk')
-    for obj in objects:
-        transaction = {
-            "id": obj.pk,
-            "name": obj.name,
-            "amount": obj.amount,
-            "date": obj.date        
-        }
-        if obj.category.pk not in categories:
-            categories[obj.category.pk] = obj.category.name
+#     objects = Transaction.objects.all().order_by('-date', '-pk')
+#     for obj in objects:
+#         transaction = {
+#             "id": obj.pk,
+#             "name": obj.name,
+#             "amount": obj.amount,
+#             "date": obj.date        
+#         }
+#         if obj.category.pk not in categories:
+#             categories[obj.category.pk] = obj.category.name
 
-        if obj.account.pk not in accounts:
-            accounts[obj.account.pk] = {
-                "name": obj.account.name,
-                "type": obj.account.typ
-            }
+#         if obj.account.pk not in accounts:
+#             accounts[obj.account.pk] = {
+#                 "name": obj.account.name,
+#                 "type": obj.account.typ
+#             }
 
-        transaction["category"] = categories[obj.category.pk]
-        transaction["account"] = accounts[obj.account.pk].get("name")
-        transaction["account_type"] = accounts[obj.account.pk].get("type")            
+#         transaction["category"] = categories[obj.category.pk]
+#         transaction["account"] = accounts[obj.account.pk].get("name")
+#         transaction["account_type"] = accounts[obj.account.pk].get("type")            
 
-        transactions.append(transaction)
-    return HttpResponse({"transactions": transactions}, content_type="text/json")
+#         transactions.append(transaction)
+#     return HttpResponse({"transactions": transactions}, content_type="text/json")
